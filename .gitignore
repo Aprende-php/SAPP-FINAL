@@ -6,7 +6,7 @@ protected/data/*.db
 themes/classic/views/
 framework/*
 !framework/.gitignore
-
+protected/vendors/mpdf/examples/*
 # =========================
 # Operating System Files
 # =========================
