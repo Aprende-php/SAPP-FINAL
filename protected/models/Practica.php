@@ -92,6 +92,8 @@ class Practica extends CActiveRecord
 			'PRA_INICIO' => 'Inicio práctica',
 			'PRA_TERMINO' => 'Termino práctica',
 			'PRA_TIPO' => 'Tipo práctica',
+			'PRA_DIRF1' => 'Formulario 1',
+			'PRA_DIRF3' => 'Formulario 3',
 		);
 	}
 

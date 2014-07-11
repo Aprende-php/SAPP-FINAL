@@ -142,7 +142,7 @@ class UsuarioController extends Controller
 		if($personas==null)
 			throw new CHttpException(500,'No se puede acceder a la pagina solicitada,No existen Personas en el sistema que se les pueda asignar un usuario');
 		
-		$this->render('crear',array('user'=>$user,'personas'=>$personas));
+		$this->render('informesPractica',array('user'=>$user,'personas'=>$personas));
 	}
 	/**
 	 * Updates a particular model.

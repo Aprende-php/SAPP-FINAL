@@ -45,12 +45,55 @@ class PracticasController extends Controller
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
+			array('allow',
+				'actions'=>array('informes'),
+				'users'=>array('alumno'),
+			),
 			array('deny', //denegar
 				'users'=>array('*'),
 			),
 		);
 	}
 
+	public function actionInformes(){
+		$model=Practica::model()->findByAttributes(array('PER_ID'=>Yii::app()->user->ID));//acceso a la Tabla fisica de la BD
+		if ($model === null) {
+			throw new CHttpException(500,'No se puede acceder a la pagina solicitada,no tienes asignada una practica.');
+		}
+		if(isset($_POST["Practica"]))
+		{
+			$model->attributes=$_POST['Practica'];
+			$file1=CUploadedFile::getInstance($model,"PRA_DIRF1");
+			$file2=CUploadedFile::getInstance($model,'PRA_DIRF3');
+			if ($file1!==null) {
+	           if($file1->getExtensionName()=="pdf")
+	           {
+	                $file1->saveAs(Yii::getPathOfAlias("webroot")."/uploads/informes/".$model->PER_ID."-Formulario-1.pdf");
+	                $model->PRA_DIRF1=$model->PER_ID."-Formulario-1.pdf";
+	                $model->save();
+	           }else
+	           {
+		            Yii::app()->user->setFlash('mensaje','');
+		            $this->refresh();
+	           }
+			}
+            if ($file2!==null) {   
+				if($file2->getExtensionName()=="pdf")
+	           {
+	                $file2->saveAs(Yii::getPathOfAlias("webroot")."/uploads/informes/".$model->PER_ID."-Formulario-3.pdf");
+	                $model->PRA_DIRF3=$model->PER_ID."-Formulario-3.pdf";
+	                $model->save();
+	           }else
+	           {
+		            Yii::app()->user->setFlash('mensaje','');
+		            $this->refresh();
+	           }
+           }
+		}
+		$this->render('informesPractica',array(
+			'model'=>$model
+		));
+	}
 
 	public function actionEditarPractica($id)
 	{
